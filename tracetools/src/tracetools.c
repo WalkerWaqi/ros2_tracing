@@ -19,10 +19,10 @@
 
 #ifdef TRACETOOLS_LTTNG_ENABLED
 # include "tracetools/tp_call.h"
-# define CONDITIONAL_TP(...) \
+# define _CONDITIONAL_TP(...) \
   tracepoint(TRACEPOINT_PROVIDER, __VA_ARGS__)
 #else
-# define CONDITIONAL_TP(...)
+# define _CONDITIONAL_TP(...)
 #endif
 
 bool ros_trace_compile_status()
@@ -46,7 +46,7 @@ void TRACETOOLS_TRACEPOINT(
   rcl_init,
   const void * context_handle)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_init,
     context_handle);
 }
@@ -58,7 +58,7 @@ void TRACETOOLS_TRACEPOINT(
   const char * node_name,
   const char * node_namespace)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_node_init,
     node_handle,
     rmw_handle,
@@ -71,7 +71,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * rmw_publisher_handle,
   const uint8_t * gid)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rmw_publisher_init,
     rmw_publisher_handle,
     gid);
@@ -85,7 +85,7 @@ void TRACETOOLS_TRACEPOINT(
   const char * topic_name,
   const size_t queue_depth)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_publisher_init,
     publisher_handle,
     node_handle,
@@ -100,7 +100,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * message)
 {
   (void)publisher_handle;
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_publish,
     message);
 }
@@ -110,7 +110,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * publisher_handle,
   const void * message)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_publish,
     publisher_handle,
     message);
@@ -120,7 +120,7 @@ void TRACETOOLS_TRACEPOINT(
   rmw_publish,
   const void * message)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rmw_publish,
     message);
 }
@@ -130,7 +130,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * rmw_subscription_handle,
   const uint8_t * gid)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rmw_subscription_init,
     rmw_subscription_handle,
     gid);
@@ -144,7 +144,7 @@ void TRACETOOLS_TRACEPOINT(
   const char * topic_name,
   const size_t queue_depth)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_subscription_init,
     subscription_handle,
     node_handle,
@@ -158,7 +158,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * subscription_handle,
   const void * subscription)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_subscription_init,
     subscription_handle,
     subscription);
@@ -169,7 +169,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * subscription,
   const void * callback)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_subscription_callback_added,
     subscription,
     callback);
@@ -182,7 +182,7 @@ void TRACETOOLS_TRACEPOINT(
   int64_t source_timestamp,
   const bool taken)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rmw_take,
     rmw_subscription_handle,
     message,
@@ -194,7 +194,7 @@ void TRACETOOLS_TRACEPOINT(
   rcl_take,
   const void * message)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_take,
     message);
 }
@@ -203,7 +203,7 @@ void TRACETOOLS_TRACEPOINT(
   rclcpp_take,
   const void * message)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_take,
     message);
 }
@@ -215,7 +215,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * rmw_service_handle,
   const char * service_name)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_service_init,
     service_handle,
     node_handle,
@@ -228,7 +228,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * service_handle,
   const void * callback)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_service_callback_added,
     service_handle,
     callback);
@@ -241,7 +241,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * rmw_client_handle,
   const char * service_name)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_client_init,
     client_handle,
     node_handle,
@@ -254,7 +254,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * timer_handle,
   int64_t period)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_timer_init,
     timer_handle,
     period);
@@ -265,7 +265,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * timer_handle,
   const void * callback)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_timer_callback_added,
     timer_handle,
     callback);
@@ -276,7 +276,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * timer_handle,
   const void * node_handle)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_timer_link_node,
     timer_handle,
     node_handle);
@@ -287,7 +287,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * callback,
   const char * function_symbol)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_callback_register,
     callback,
     function_symbol);
@@ -298,7 +298,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * callback,
   const bool is_intra_process)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     callback_start,
     callback,
     is_intra_process);
@@ -308,7 +308,7 @@ void TRACETOOLS_TRACEPOINT(
   callback_end,
   const void * callback)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     callback_end,
     callback);
 }
@@ -318,7 +318,7 @@ void TRACETOOLS_TRACEPOINT(
   const void * node_handle,
   const void * state_machine)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_lifecycle_state_machine_init,
     node_handle,
     state_machine);
@@ -330,7 +330,7 @@ void TRACETOOLS_TRACEPOINT(
   const char * start_label,
   const char * goal_label)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rcl_lifecycle_transition,
     state_machine,
     start_label,
@@ -340,7 +340,7 @@ void TRACETOOLS_TRACEPOINT(
 void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_get_next_ready)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_executor_get_next_ready);
 }
 
@@ -348,7 +348,7 @@ void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_wait_for_work,
   const int64_t timeout)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_executor_wait_for_work,
     timeout);
 }
@@ -357,7 +357,7 @@ void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_execute,
   const void * handle)
 {
-  CONDITIONAL_TP(
+  _CONDITIONAL_TP(
     rclcpp_executor_execute,
     handle);
 }
