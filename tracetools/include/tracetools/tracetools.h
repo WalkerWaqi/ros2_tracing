@@ -75,14 +75,27 @@
  *
  * This macro currently supports up to 9 tracepoint arguments after the event name.
  */
-#  define TRACEPOINT(...) \
+#  define TRACETOOLS_TRACEPOINT(...) \
   _GET_MACRO_TRACEPOINT(__VA_ARGS__)(__VA_ARGS__)
 #  define DECLARE_TRACEPOINT(...) \
   _GET_MACRO_DECLARE_TRACEPOINT(__VA_ARGS__)(__VA_ARGS__)
 #else
-#  define TRACEPOINT(...) ((void) (0))
+#  define TRACETOOLS_TRACEPOINT(...) ((void) (0))
 #  define DECLARE_TRACEPOINT(...)
 #endif  // TRACETOOLS_DISABLED
+
+// TODO(christophebedard) remove in Rolling after Humble release
+#ifndef _WIN32
+# define _DEPRECATED_WITH_MSG(msg) __attribute__((deprecated(msg)))
+#else
+# define _DEPRECATED_WITH_MSG(msg) __declspec(deprecated(msg))
+#endif
+static inline void _DEPRECATED_WITH_MSG("use TRACETOOLS_TRACEPOINT()") _TRACEPOINT_macro(void)
+{
+}
+#define TRACEPOINT(...) \
+  _TRACEPOINT_macro(); \
+  TRACETOOLS_TRACEPOINT(__VA_ARGS__)
 
 #ifdef __cplusplus
 extern "C"

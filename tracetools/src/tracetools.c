@@ -42,7 +42,7 @@ bool ros_trace_compile_status()
 # pragma warning(disable: 4100)
 #endif
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_init,
   const void * context_handle)
 {
@@ -51,7 +51,7 @@ void TRACEPOINT(
     context_handle);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_node_init,
   const void * node_handle,
   const void * rmw_handle,
@@ -66,7 +66,7 @@ void TRACEPOINT(
     node_namespace);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rmw_publisher_init,
   const void * rmw_publisher_handle,
   const uint8_t * gid)
@@ -77,7 +77,7 @@ void TRACEPOINT(
     gid);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_publisher_init,
   const void * publisher_handle,
   const void * node_handle,
@@ -94,7 +94,7 @@ void TRACEPOINT(
     queue_depth);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_publish,
   const void * publisher_handle,
   const void * message)
@@ -105,7 +105,7 @@ void TRACEPOINT(
     message);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_publish,
   const void * publisher_handle,
   const void * message)
@@ -116,7 +116,7 @@ void TRACEPOINT(
     message);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rmw_publish,
   const void * message)
 {
@@ -125,7 +125,7 @@ void TRACEPOINT(
     message);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rmw_subscription_init,
   const void * rmw_subscription_handle,
   const uint8_t * gid)
@@ -136,7 +136,7 @@ void TRACEPOINT(
     gid);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_subscription_init,
   const void * subscription_handle,
   const void * node_handle,
@@ -153,7 +153,7 @@ void TRACEPOINT(
     queue_depth);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_subscription_init,
   const void * subscription_handle,
   const void * subscription)
@@ -164,7 +164,7 @@ void TRACEPOINT(
     subscription);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_subscription_callback_added,
   const void * subscription,
   const void * callback)
@@ -175,7 +175,7 @@ void TRACEPOINT(
     callback);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rmw_take,
   const void * rmw_subscription_handle,
   const void * message,
@@ -190,7 +190,7 @@ void TRACEPOINT(
     taken);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_take,
   const void * message)
 {
@@ -199,7 +199,7 @@ void TRACEPOINT(
     message);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_take,
   const void * message)
 {
@@ -208,7 +208,7 @@ void TRACEPOINT(
     message);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_service_init,
   const void * service_handle,
   const void * node_handle,
@@ -223,7 +223,7 @@ void TRACEPOINT(
     service_name);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_service_callback_added,
   const void * service_handle,
   const void * callback)
@@ -234,7 +234,7 @@ void TRACEPOINT(
     callback);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_client_init,
   const void * client_handle,
   const void * node_handle,
@@ -249,7 +249,7 @@ void TRACEPOINT(
     service_name);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_timer_init,
   const void * timer_handle,
   int64_t period)
@@ -260,7 +260,7 @@ void TRACEPOINT(
     period);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_timer_callback_added,
   const void * timer_handle,
   const void * callback)
@@ -271,7 +271,7 @@ void TRACEPOINT(
     callback);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_timer_link_node,
   const void * timer_handle,
   const void * node_handle)
@@ -282,7 +282,7 @@ void TRACEPOINT(
     node_handle);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_callback_register,
   const void * callback,
   const char * function_symbol)
@@ -293,7 +293,7 @@ void TRACEPOINT(
     function_symbol);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   callback_start,
   const void * callback,
   const bool is_intra_process)
@@ -304,7 +304,7 @@ void TRACEPOINT(
     is_intra_process);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   callback_end,
   const void * callback)
 {
@@ -313,7 +313,7 @@ void TRACEPOINT(
     callback);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_lifecycle_state_machine_init,
   const void * node_handle,
   const void * state_machine)
@@ -324,7 +324,7 @@ void TRACEPOINT(
     state_machine);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rcl_lifecycle_transition,
   const void * state_machine,
   const char * start_label,
@@ -337,14 +337,14 @@ void TRACEPOINT(
     goal_label);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_get_next_ready)
 {
   CONDITIONAL_TP(
     rclcpp_executor_get_next_ready);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_wait_for_work,
   const int64_t timeout)
 {
@@ -353,7 +353,7 @@ void TRACEPOINT(
     timeout);
 }
 
-void TRACEPOINT(
+void TRACETOOLS_TRACEPOINT(
   rclcpp_executor_execute,
   const void * handle)
 {
