@@ -18,6 +18,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
+#include "./utils.hpp"
+
 using namespace std::chrono_literals;
 
 #define NODE_NAME "test_ping"
@@ -41,6 +43,9 @@ public:
     timer_ = this->create_wall_timer(
       500ms,
       std::bind(&PingNode::timer_callback, this));
+
+    printf("original: pub ");
+    utils::print_gid(pub_->get_gid());
   }
 
   explicit PingNode(rclcpp::NodeOptions options)

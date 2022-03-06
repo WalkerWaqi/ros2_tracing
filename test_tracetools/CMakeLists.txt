@@ -75,6 +75,13 @@ if(BUILD_TESTING)
     rclcpp
     std_msgs
   )
+  add_executable(test_pingpong
+    src/test_pingpong.cpp
+  )
+  ament_target_dependencies(test_pingpong
+    rclcpp
+    std_msgs
+  )
   add_executable(test_timer
     src/test_timer.cpp
   )
@@ -102,6 +109,7 @@ if(BUILD_TESTING)
     test_lifecycle_client
     test_ping
     test_pong
+    test_pingpong
     test_publisher
     test_service_ping
     test_service_pong

@@ -13,33 +13,42 @@
 // limitations under the License.
 
 #include <memory>
+#include <chrono>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
 #include "./utils.hpp"
 
-#define NODE_NAME "test_pong"
-#define SUB_TOPIC_NAME "ping"
-#define PUB_TOPIC_NAME "pong"
+using namespace std::chrono_literals;
 
-class PongNode : public rclcpp::Node
+#define NODE_NAME "test_pingpong"
+#define PUB_TOPIC_NAME "ping"
+#define QUEUE_DEPTH 10
+
+class PingPongNode : public rclcpp::Node
 {
 public:
-  PongNode(rclcpp::NodeOptions options, bool do_only_one)
+  PingPongNode(rclcpp::NodeOptions options, bool do_only_one)
   : Node(NODE_NAME, options), do_only_one_(do_only_one)
   {
     sub_ = this->create_subscription<std_msgs::msg::String>(
-      SUB_TOPIC_NAME,
-      rclcpp::QoS(10),
-      std::bind(&PongNode::callback, this, std::placeholders::_1, std::placeholders::_2));
+      PUB_TOPIC_NAME,
+      rclcpp::QoS(QUEUE_DEPTH),
+      std::bind(&PingPongNode::callback, this, std::placeholders::_1, std::placeholders::_2));
     pub_ = this->create_publisher<std_msgs::msg::String>(
       PUB_TOPIC_NAME,
-      rclcpp::QoS(10));
+      rclcpp::QoS(QUEUE_DEPTH));
+    timer_ = this->create_wall_timer(
+      500ms,
+      std::bind(&PingPongNode::timer_callback, this));
+
+    printf("original: pub ");
+    utils::print_gid(pub_->get_gid());
   }
 
-  explicit PongNode(rclcpp::NodeOptions options)
-  : PongNode(options, true) {}
+  explicit PingPongNode(rclcpp::NodeOptions options)
+  : PingPongNode(options, true) {}
 
 private:
   void callback(const std_msgs::msg::String::ConstSharedPtr msg, const rclcpp::MessageInfo & message_info)
@@ -48,16 +57,21 @@ private:
     utils::print_gid(message_info.get_rmw_message_info().publisher_gid);
 
     RCLCPP_INFO(this->get_logger(), "[output] %s", msg->data.c_str());
-    auto next_msg = std::make_shared<std_msgs::msg::String>();
-    next_msg->data = "some random pong string";
-    pub_->publish(*next_msg);
     if (do_only_one_) {
       rclcpp::shutdown();
     }
   }
 
+  void timer_callback()
+  {
+    auto msg = std::make_shared<std_msgs::msg::String>();
+    msg->data = "some random ping string";
+    pub_->publish(*msg);
+  }
+
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
+  rclcpp::TimerBase::SharedPtr timer_;
   bool do_only_one_;
 };
 
@@ -73,8 +87,8 @@ int main(int argc, char * argv[])
   rclcpp::init(argc, argv);
 
   rclcpp::executors::SingleThreadedExecutor exec;
-  auto pong_node = std::make_shared<PongNode>(rclcpp::NodeOptions(), do_only_one);
-  exec.add_node(pong_node);
+  auto ping_node = std::make_shared<PingPongNode>(rclcpp::NodeOptions(), do_only_one);
+  exec.add_node(ping_node);
 
   printf("spinning\n");
   exec.spin();
